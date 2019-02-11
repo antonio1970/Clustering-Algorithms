@@ -14,6 +14,6 @@ met <- c("single","complete","average","mcquitty","median")
  
  plot(fit) 
  
-## draw dendogram with red borders around the 2 clusters
+## draw dendogram with green borders around the 2 clusters
 
-  rect.hclust(fit, k=2, border="red")
+  rect.hclust(fit, k=2, border="green")
