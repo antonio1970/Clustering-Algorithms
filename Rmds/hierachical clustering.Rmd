@@ -1,0 +1,31 @@
+---
+title: "Hiearachical clustering"
+output: github_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+## Preparing the dataset for the cluster analysis
+
+
+```{r iris}
+d2<-iris[,-c(5)]
+d2 <- scale(d2)
+```
+
+## Compute the distance matrix and hierarchical clustering algorithm
+
+```{r cluster algorithm}
+d <- dist(d2, method = "euclidean")
+ fit <- hclust(d, method="average")
+```
+
+## Plot dendogram
+
+```{r plot dendogram}
+plot(fit)
+rect.hclust(fit, k=2, border="green")
+```
+
