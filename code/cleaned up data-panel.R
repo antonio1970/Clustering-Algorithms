@@ -12,9 +12,9 @@ gather(total_pop, key = Year, value = totpop, year60:year2017) %>%
   arrange(Country)
 #  Save the file as csv file
 
-write_csv(total_pop, path = "C:/Users/anton/OneDrive/Escritorio/Proyecto investigacion/total.csv")
+write_csv(total_pop, path = "C:/Users/anton/OneDrive/Escritorio/Clustering-Algorithms/totalpop.csv")
 
 # Alternatively, save the file as an Excel file in our working directory
 
 
-write_xlsx(total_pop, "totalpop.xlsx")
+write_xlsx(total_pop, "C:/Users/anton/OneDrive/Escritorio/Clustering-Algorithms/data/totalpop.xlsx")
