@@ -19,7 +19,8 @@ head(total_pop, 5)
 
 ```{r}
 gather(total_pop, key = Year, value = totpop, year60:year2017) %>% 
-  arrange(Country)
+  arrange(Country) %>% 
+  head()
 ```
 
 ```{r}
