@@ -1,3 +1,9 @@
+# Load libraries
+library(tidyverse)
+library(ggplot2)
+library(corrplot)
+library(GGally)
+
 # read csv file
 
 knowledge <- read.csv2("../Proyecto investigacion/Nilufar datos de KE/Cluster datos/KE_data_1995-2017 final version (corrected).csv", header = TRUE, dec = ",", sep = ";")
