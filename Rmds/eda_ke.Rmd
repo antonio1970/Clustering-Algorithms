@@ -1,30 +1,41 @@
-# Load libraries
+---
+title: "eda_ke"
+output: github_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+```{r load libraries}
 library(tidyverse)
 library(ggplot2)
 library(corrplot)
 library(GGally)
 library(naniar)
 library(readxl)
+```
 
+```{r}
 # read csv file
+knowledge <- read.csv2("../data/KE_data_1995-2017 final version_cluster.csv", header = TRUE, dec = ",", sep = ";")
 
-knowledge <- read.csv2("../Clustering-Algorithms/data/KE_data_1995-2017 final version_cluster.csv", header = TRUE, dec = ",", sep = ";")
+```
 
+```{r}
 # Select subset of countries
 
 afcountries <- c ("Algeria",	"Ethiopia", "Niger", "Angola", "Gabon", "Nigeria","Benin",
                     "Gambia",	"Rwanda", "Botswana", "Guinea Bissau", "South Africa", "Burkina Faso",
-                  "Ghana", "Sao Tome and Principe", "Burundi", "Guinea", "Senegal", "Cameroon", "Kenya", "Seychelles",
-                  "Cape Verde", "Lesotho", "Sierra Leone", "Central African Republic", "Liberia",	"Somalia", "Chad",	
-                  "Libya", "Sudan", "Cote d'Ivoire", "Madagascar", "Swaziland", "Comoros", "Malawi", "Tanzania", "Congo Democratic",
-                   "Mali", "Tunisia", "Congo Republic", "Mauritania", "Togo", "Djibouti", "Mauritius", "Uganda", "Egypt", "Morocco", 
-                  "Zambia", "Equatorial Guinea", "Mozambique", "Zimbawe", "Eritrea", "Namibia	")
-  
-# Subset of countries
-  
+                  "Ghana", "Sao Tome and Principe", "Burundi", "Guinea", "Senegal", "Cameroon", "Kenya", "Seychelles","Cape Verde", "Lesotho", "Sierra Leone", "Central African Republic", "Liberia",	"Somalia", "Chad",	"Libya", "Sudan", "Cote d'Ivoire", "Madagascar", "Swaziland", "Comoros", "Malawi", "Tanzania", "Congo Democratic", "Mali", "Tunisia", "Congo Republic", "Mauritania", "Togo", "Djibouti", "Mauritius", "Uganda", "Egypt", "Morocco", "Zambia", "Equatorial Guinea", "Mozambique", "Zimbawe", "Eritrea", "Namibia")
+```
+
+```{r}
+# Dataframe with african countries
 afdata <-subset(knowledge, knowledge$Country %in% afcountries)
+```
 
-
+```{r}
 # Generate regional dummiess
 ca <- c("Angola", "Cameroon", "Cabo Verde", "Central African Republic", "Chad","Equatorial Guinea", "Eritrea", "Ethiopia",
         "Gabon", "Sao Tome and Principe")
@@ -43,12 +54,14 @@ afdata$Country.afdata <- ifelse(afdata$Country %in% sa,1,0)
 
 wa <- c("Benin", "Burkina Faso", "Cote d'Ivoire", "Gambia", "Guinea Bissau", "Ghana", "Guinea", "Liberia", "Mali", "Niger", "Nigeria", "Senegal", "Sierra Leone", "Togo")
 afdata$Country.westafrica <- ifelse(afdata$Country %in% wa,1,0)
+```
 
-# write.csv(afdata, file= "afdata.csv", row.names = FALSE) #Without Java requirmentes (writexl, library)
 
-# Summary
-summary(afdata)
+```{r}
+summary (afdata)
+```
 
+```{r}
 # Number of countries included in the sample 
 
 countrylist = unique(afdata$Country)
@@ -58,7 +71,9 @@ length(countrylist)
 
 yearlist = unique(afdata$Year)
 length(yearlist)
+```
 
+```{r}
 # Number of missing values (% percentage)
 
 prop_complete(afdata)
@@ -67,31 +82,20 @@ pct_miss(afdata)
 #pattern of missing values in each variable
 miss_var_summary(afdata[, c(3:15)])
 
+```
 
-# Missing values per country
-
-  
-afdata %>% group_by(Country) %>% 
-    miss_var_summary()
-
-# Missing values per year
-
-afdata %>% group_by(Year) %>% 
-  miss_var_summary()
-
+```{r, warning =FALSE}
 # using GGally to show a complete picture of the features to be used in the analysis
 
 ggpairs(afdata[, c(3:15)])
+```
 
+```{r}
 # Correlation matrix
 
 m = cor(knowledge[, c(3:15)], use ="pairwise")
 m
 corrplot(m)
 
+```
 
-# cORRELATION per year
-
-afdata %>%
-  group_by(Year) %>%
-  summarize(COR=cor(REGQU, RULEL, use="pairwise.complete.obs")) 
