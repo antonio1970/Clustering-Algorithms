@@ -46,6 +46,13 @@ afdata$Country.westafrica <- ifelse(afdata$Country %in% wa,1,0)
 
 # write.csv(afdata, file= "afdata.csv", row.names = FALSE) #Without Java requirmentes (writexl, library)
 
+
+# De manera más elegante
+
+func1 <- function(x){
+  ifelse(x %in% ca, "ca", ifelse(x %in% ea,"ea", ifelse(x%in% sa, "sa", ifelse(x%in% wa, "wa", ifelse(x%in% na, "na", "otros")))))
+}
+
 # Summary
 summary(afdata)
 
