@@ -15,10 +15,10 @@ knowledge <- read.csv2("../Clustering-Algorithms/data/KE_data_1995-2017 final ve
 afcountries <- c ("Algeria",	"Ethiopia", "Niger", "Angola", "Gabon", "Nigeria","Benin",
                     "Gambia",	"Rwanda", "Botswana", "Guinea Bissau", "South Africa", "Burkina Faso",
                   "Ghana", "Sao Tome and Principe", "Burundi", "Guinea", "Senegal", "Cameroon", "Kenya", "Seychelles",
-                  "Cape Verde", "Lesotho", "Sierra Leone", "Central African Republic", "Liberia",	"Somalia", "Chad",	
-                  "Libya", "Sudan", "Cote d'Ivoire", "Madagascar", "Swaziland", "Comoros", "Malawi", "Tanzania", "Congo Democratic",
+                  "Cabo Verde", "Lesotho", "Sierra Leone", "Central African Republic", "Liberia",	"Somalia", "Chad",	
+                  "Libya", "Sudan", "Cote d'Ivoire", "Madagascar", "Swaziland", "Comoros", "Malawi", "Tanzania", "Congo Democratic Republic",
                    "Mali", "Tunisia", "Congo Republic", "Mauritania", "Togo", "Djibouti", "Mauritius", "Uganda", "Egypt", "Morocco", 
-                  "Zambia", "Equatorial Guinea", "Mozambique", "Zimbawe", "Eritrea", "Namibia	")
+                  "Zambia", "Equatorial Guinea", "Mozambique", "Zimbabwe", "Eritrea", "Namibia")
   
 # Subset of countries
   
@@ -28,21 +28,13 @@ afdata <-subset(knowledge, knowledge$Country %in% afcountries)
 # Generate regional dummiess
 ca <- c("Angola", "Cameroon", "Cabo Verde", "Central African Republic", "Chad","Equatorial Guinea", "Eritrea", "Ethiopia",
         "Gabon", "Sao Tome and Principe")
-afdata$Country.centralafrica <- ifelse(afdata$Country %in% ca,1,0)
-
 ea <- c ("Burundi", "Comoros", "Congo Democratic Republic", "Congo Republic", "Djibouti", "Kenya",
-         "Rwanda", "Seychelles", "Somalia", "Sudan", "Tanzania", "Uganda", "Zambia", "Zimbawe")
-
-afdata$Country.eastafrica <- ifelse(afdata$Country %in% ea,1,0)
-
+         "Rwanda", "Seychelles", "Somalia", "Tanzania", "Uganda", "Zambia", "Zimbabwe")
 na <- c("Algeria", "Egypt", "Libya", "Mauritania", "Morocco", "Sudan", "Tunisia")
-afdata$Country.northafrica <- ifelse(afdata$Country %in% na,1,0)
+sa<-  c("Botswana", "Lesotho", "Madagascar", "Malawi", "Mauritius", "Mozambique", "Namibia", "South Africa", "Swaziland")
+wa <- c("Benin", "Burkina Faso", "Cote d'Ivoire", "Gambia", "Guinea Bissau", "Ghana", "Guinea", "Liberia", "Mali", "Niger", 
+        "Nigeria", "Senegal", "Sierra Leone", "Togo")
 
-sa<-  c("Botswana", "Lesotho", "Madagascar", "Malawi", "Mauritius", "Mozambique", "Namibia", "South  Africa", "Swaziland")
-afdata$Country.afdata <- ifelse(afdata$Country %in% sa,1,0)
-
-wa <- c("Benin", "Burkina Faso", "Cote d'Ivoire", "Gambia", "Guinea Bissau", "Ghana", "Guinea", "Liberia", "Mali", "Niger", "Nigeria", "Senegal", "Sierra Leone", "Togo")
-afdata$Country.westafrica <- ifelse(afdata$Country %in% wa,1,0)
 
 # write.csv(afdata, file= "afdata.csv", row.names = FALSE) #Without Java requirmentes (writexl, library)
 
@@ -50,9 +42,18 @@ afdata$Country.westafrica <- ifelse(afdata$Country %in% wa,1,0)
 # De manera más elegante
 
 func1 <- function(x){
-  ifelse(x %in% ca, "ca", ifelse(x %in% ea,"ea", ifelse(x%in% sa, "sa", ifelse(x%in% wa, "wa", ifelse(x%in% na, "na", "otros")))))
+  ifelse(x %in% ca, "Central Africa", ifelse(x %in% ea,"East Africa", ifelse(x%in% sa, "South Africa", ifelse(x%in% wa, "West Africa", ifelse(x%in% na, "North Africa", "otros")))))
 }
 
+afdata$region <- func1(afdata$Country)
+
+table(afdata$region)
+
+afdata$region = as.factor(afdata$region)
+
+# Write csv file
+write.csv(afdata, file= "afdata.csv", row.names = FALSE)
+write.xlsx(afdata, file ="afdata.xlsx", row.names = FALSE)
 # Summary
 summary(afdata)
 
