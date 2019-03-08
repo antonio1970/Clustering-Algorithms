@@ -25,6 +25,12 @@ afcountries <- c ("Algeria",	"Ethiopia", "Niger", "Angola", "Gabon", "Nigeria","
 afdata <-subset(knowledge, knowledge$Country %in% afcountries)
 
 
+# Select a set of variables to be used in the empirical analysis
+
+afdata1 <- afdata %>% 
+  select(Country, Year, REGQU, RULEL, PRIMARY, SECONDARY, TERTIARY,TELEP3,FIXBI2,INTERN3, PATEN2, STJOU2, TNTBA)
+
+
 # Generate regional dummiess
 ca <- c("Angola", "Cameroon", "Cabo Verde", "Central African Republic", "Chad","Equatorial Guinea", "Eritrea", "Ethiopia",
         "Gabon", "Sao Tome and Principe")
@@ -36,78 +42,64 @@ wa <- c("Benin", "Burkina Faso", "Cote d'Ivoire", "Gambia, The", "Ghana", "Guine
         "Nigeria", "Senegal", "Sierra Leone", "Togo")
 
 
-# write.csv(afdata, file= "afdata.csv", row.names = FALSE) #Without Java requirmentes (writexl, library)
-
-
 # De manera más elegante
 
 func1 <- function(x){
   ifelse(x %in% ca, "Central Africa", ifelse(x %in% ea,"East Africa", ifelse(x%in% sa, "South Africa", ifelse(x%in% wa, "West Africa", ifelse(x%in% na, "North Africa", "otros")))))
 }
 
-afdata$region <- func1(afdata$Country)
+afdata1$region <- func1(afdata1$Country)
+afdata1$region = as.factor(afdata1$region)
 
-table(afdata$region)
 
-afdata$region = as.factor(afdata$region)
-
-# Write csv file
-write.csv(afdata, file= "afdata.csv", row.names = FALSE)
-write.xlsx(afdata, file ="afdata.xlsx", row.names = FALSE)
-# Summary
-summary(afdata)
 
 # Number of countries included in the sample 
 
-countrylist = unique(afdata$Country)
+countrylist = unique(afdata1$Country)
 length(countrylist)
 
 # Number of time periods 
 
-yearlist = unique(afdata$Year)
+yearlist = unique(afdata1$Year)
 length(yearlist)
 
 # Number of missing values (% percentage)
 
-prop_complete(afdata)
-pct_miss(afdata)
+prop_complete(afdata1)
+pct_miss(afdata1)
 
 #pattern of missing values in each variable
-miss_var_summary(afdata[, c(3:15)])
+miss_var_summary(afdata1[, c(3:13)])
 
 
-# Missing values per country
-
-  
-afdata %>% group_by(Country) %>% 
-    miss_var_summary()
-
-# Missing values per year
-
-afdata %>% group_by(Year) %>% 
-  miss_var_summary()
 
 # using GGally to show a complete picture of the features to be used in the analysis
 
-ggpairs(afdata[, c(3:15)])
+ggpairs(afdata1[, c(3:13)])
 
 # Correlation matrix
 
-m = cor(knowledge[, c(3:15)], use ="pairwise")
+m = cor(afdata1[, c(3:13)], use ="pairwise")
 m
-corrplot(m)
+corrplot(m, method = 'number', type = 'upper')
 
 
 # Summary of the variables for different time periods
 
-afdata2011 = subset(afdata, Year>=2011)  # 2011-2017 time period
+afdata2011 = subset(afdata1, Year>=2011)  # 2011-2017 time period
 summary(afdata2011)
 plot(afdata2011, col= afdata2011$region)
 
-afdata0610 = subset(afdata, Year>=2006 & Year<2011) 
+afdata0610 = subset(afdata1, Year>=2006 & Year<2011) 
 summary(afdata0610)
 plot(afdata0610, col = afdata$region)
 
-afdata0105 = subset(afdata, Year>=2001 & Year<2006)
+afdata0105 = subset(afdata1, Year>=2001 & Year<2006)
 summary(afdata0105)
 plot(afdata0105, col =afdata$region)
+
+# Save file as csv and excel file
+
+write.csv(afdata1, file= "afdata1.csv", row.names = FALSE)
+write.xlsx(afdata1, file ="afdata1.xlsx", row.names = FALSE)
+
