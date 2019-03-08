@@ -98,8 +98,11 @@ m
 corrplot(m)
 
 
-# cORRELATION per year
+# Summary of the variables for different time periods
 
-afdata %>%
-  group_by(Year) %>%
-  summarize(COR=cor(REGQU, RULEL, use="pairwise.complete.obs")) 
+afdata2011 = subset(afdata, Year>=2011)  # 2011-2017 time period
+summary(afdata2011)
+afdata0610 = subset(afdata, Year>=2006 & Year<2011) 
+summary(afdata0610)
+afdata0105 = subset(afdata, Year>=2001 & Year<2006)
+summary(afdata0105)
