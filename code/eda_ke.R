@@ -13,11 +13,11 @@ knowledge <- read.csv2("../Clustering-Algorithms/data/KE_data_1995-2017 final ve
 # Select subset of countries
 
 afcountries <- c ("Algeria",	"Ethiopia", "Niger", "Angola", "Gabon", "Nigeria","Benin",
-                    "Gambia",	"Rwanda", "Botswana", "Guinea Bissau", "South Africa", "Burkina Faso",
+                    "Gambia, The",	"Rwanda", "Botswana", "South Africa", "Burkina Faso",
                   "Ghana", "Sao Tome and Principe", "Burundi", "Guinea", "Senegal", "Cameroon", "Kenya", "Seychelles",
-                  "Cabo Verde", "Lesotho", "Sierra Leone", "Central African Republic", "Liberia",	"Somalia", "Chad",	
-                  "Libya", "Sudan", "Cote d'Ivoire", "Madagascar", "Swaziland", "Comoros", "Malawi", "Tanzania", "Congo Democratic Republic",
-                   "Mali", "Tunisia", "Congo Republic", "Mauritania", "Togo", "Djibouti", "Mauritius", "Uganda", "Egypt", "Morocco", 
+                  "Cabo Verde", "Lesotho", "Sierra Leone", "Central African Republic", "Liberia",	"Chad",	
+                  "Libya", "Sudan", "Cote d'Ivoire", "Madagascar", "Comoros", "Malawi", "Tanzania", "Congo, Dem. Rep.",
+                   "Mali", "Tunisia", "Congo, Rep.", "Mauritania", "Togo", "Djibouti", "Mauritius", "Uganda", "Egypt, Arab Rep.", "Morocco", 
                   "Zambia", "Equatorial Guinea", "Mozambique", "Zimbabwe", "Eritrea", "Namibia")
   
 # Subset of countries
@@ -28,11 +28,11 @@ afdata <-subset(knowledge, knowledge$Country %in% afcountries)
 # Generate regional dummiess
 ca <- c("Angola", "Cameroon", "Cabo Verde", "Central African Republic", "Chad","Equatorial Guinea", "Eritrea", "Ethiopia",
         "Gabon", "Sao Tome and Principe")
-ea <- c ("Burundi", "Comoros", "Congo Democratic Republic", "Congo Republic", "Djibouti", "Kenya",
-         "Rwanda", "Seychelles", "Somalia", "Tanzania", "Uganda", "Zambia", "Zimbabwe")
-na <- c("Algeria", "Egypt", "Libya", "Mauritania", "Morocco", "Sudan", "Tunisia")
-sa<-  c("Botswana", "Lesotho", "Madagascar", "Malawi", "Mauritius", "Mozambique", "Namibia", "South Africa", "Swaziland")
-wa <- c("Benin", "Burkina Faso", "Cote d'Ivoire", "Gambia", "Guinea Bissau", "Ghana", "Guinea", "Liberia", "Mali", "Niger", 
+ea <- c ("Burundi", "Comoros", "Congo, Dem. Rep.", "Congo, Rep.", "Djibouti", "Kenya",
+         "Rwanda", "Seychelles", "Tanzania", "Uganda", "Zambia", "Zimbabwe")
+na <- c("Algeria", "Egypt, Arab Rep.", "Libya", "Mauritania", "Morocco", "Sudan", "Tunisia")
+sa<-  c("Botswana", "Lesotho", "Madagascar", "Malawi", "Mauritius", "Mozambique", "Namibia", "South Africa")
+wa <- c("Benin", "Burkina Faso", "Cote d'Ivoire", "Gambia, The", "Ghana", "Guinea", "Liberia", "Mali", "Niger", 
         "Nigeria", "Senegal", "Sierra Leone", "Togo")
 
 
