@@ -102,7 +102,12 @@ corrplot(m)
 
 afdata2011 = subset(afdata, Year>=2011)  # 2011-2017 time period
 summary(afdata2011)
+plot(afdata2011, col= afdata2011$region)
+
 afdata0610 = subset(afdata, Year>=2006 & Year<2011) 
 summary(afdata0610)
+plot(afdata0610, col = afdata$region)
+
 afdata0105 = subset(afdata, Year>=2001 & Year<2006)
 summary(afdata0105)
+plot(afdata0105, col =afdata$region)
