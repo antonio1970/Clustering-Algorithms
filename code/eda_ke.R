@@ -1,6 +1,5 @@
 # Load libraries
 library(tidyverse)
-library(ggplot2)
 library(corrplot)
 library(GGally)
 library(naniar)
@@ -31,7 +30,8 @@ afdata1 <- afdata %>%
   select(Country, Year, REGQU, RULEL, PRIMARY, SECONDARY, TERTIARY,TELEP3,FIXBI2,INTERN3, PATEN2, STJOU2, TNTBA)
 
 
-# Generate regional dummiess
+# Generate  a factor variable for regional areas in Africa
+
 ca <- c("Angola", "Cameroon", "Cabo Verde", "Central African Republic", "Chad","Equatorial Guinea", "Eritrea", "Ethiopia",
         "Gabon", "Sao Tome and Principe")
 ea <- c ("Burundi", "Comoros", "Congo, Dem. Rep.", "Congo, Rep.", "Djibouti", "Kenya",
@@ -42,7 +42,7 @@ wa <- c("Benin", "Burkina Faso", "Cote d'Ivoire", "Gambia, The", "Ghana", "Guine
         "Nigeria", "Senegal", "Sierra Leone", "Togo")
 
 
-# De manera más elegante
+# Using ifelse, and generate factor variable named region
 
 func1 <- function(x){
   ifelse(x %in% ca, "Central Africa", ifelse(x %in% ea,"East Africa", ifelse(x%in% sa, "South Africa", ifelse(x%in% wa, "West Africa", ifelse(x%in% na, "North Africa", "otros")))))
