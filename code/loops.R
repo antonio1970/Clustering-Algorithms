@@ -5,6 +5,9 @@
 
 afdata1_imputed <- afdata1
 
+save(afdata1_imputed, file = "afdata1_imputed.Rdata")
+
+
 # Generate a loop for filling with zeros missing values for FIXBI2, and check the result
 
 n=length(afdata1_imputed$FIXBI2)
