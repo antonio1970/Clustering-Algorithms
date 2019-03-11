@@ -129,3 +129,32 @@ while (i<=n)
     ## [1] "Uganda  :  0.02977865"
     ## [1] "Zambia  :  0.001994071"
     ## [1] "Zimbabwe  :  0.062347543"
+
+``` r
+# Proportion of missing values after imputation
+
+afdata1_imputed %>% 
+  filter(is.na(FIXBI2)) %>% 
+  count(Country)
+```
+
+    ## # A tibble: 17 x 2
+    ##    Country                      n
+    ##    <fct>                    <int>
+    ##  1 Central African Republic     4
+    ##  2 Comoros                      1
+    ##  3 Congo, Dem. Rep.             2
+    ##  4 Congo, Rep.                  3
+    ##  5 Cote d'Ivoire                2
+    ##  6 Djibouti                     2
+    ##  7 Equatorial Guinea            1
+    ##  8 Eritrea                      1
+    ##  9 Gambia, The                  2
+    ## 10 Guinea                       1
+    ## 11 Lesotho                      1
+    ## 12 Liberia                      1
+    ## 13 Libya                        1
+    ## 14 Malawi                       1
+    ## 15 Mali                         2
+    ## 16 Nigeria                      2
+    ## 17 Sudan                        1

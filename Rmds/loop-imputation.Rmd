@@ -50,3 +50,11 @@ while (i<=n)
 ```
 
 
+```{r}
+# Proportion of missing values after imputation
+
+afdata1_imputed %>% 
+  filter(is.na(FIXBI2)) %>% 
+  count(Country)
+```
+

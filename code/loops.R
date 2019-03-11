@@ -43,4 +43,6 @@ summary(afdata1_imputed$FIXBI2)
 afdata1_imputed %>% 
   filter(is.na(FIXBI2)) %>% 
   count(Country)
-  
+
+
+
