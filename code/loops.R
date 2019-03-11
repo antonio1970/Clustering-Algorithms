@@ -7,6 +7,9 @@ afdata1_imputed <- afdata1
 
 save(afdata1_imputed, file = "afdata1_imputed.Rdata")
 
+# before imputation
+
+hist(afdata1$FIXBI2, col = 'green')
 
 # Generate a loop for filling with zeros missing values for FIXBI2, and check the result
 
@@ -28,8 +31,16 @@ while (i<=n)
   }
 }
 
+# Histogram after imputation
+hist(afdata1_imputed$FIXBI2, col = 'blue')
 
+# Still missing values 28 observations
 
+summary(afdata1_imputed$FIXBI2)
 
+# Proportion of missing values after imputation
 
-
+afdata1_imputed %>% 
+  filter(is.na(FIXBI2)) %>% 
+  count(Country)
+  
