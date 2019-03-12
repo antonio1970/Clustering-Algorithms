@@ -22,9 +22,10 @@ prop.table(table(is.na(afdata1_imputed$FIXBI2)))*100
 ```
 
 ```{r}
-afdata1_imputed %>% 
+missing<- afdata1_imputed %>% 
   group_by(Country) %>% 
-     summarise(sumNA = sum(is.na(FIXBI2)))
+     summarise(sumNA = sum(is.na(FIXBI2))) %>% 
+  print(missing, n=50)
 ```
 
 ```{r}
@@ -56,6 +57,17 @@ while (i<=n)
 afdata1_imputed %>% 
   filter(is.na(FIXBI2)) %>% 
   count(Country)
+```
+
+```{r}
+afdata1_imputed[afdata1_imputed$Country=="Central African Republic", c("Country","Year", "FIXBI2")]
+```
+
+
+```{r}
+#linear imputation for the rest
+library(imputeTS)
+afdata1_imputed$FIXBI2 <- na.interpolation(afdata1_imputed$FIXBI2, option ="linear")
 ```
 
 ```{r}

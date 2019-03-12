@@ -39,9 +39,10 @@ prop.table(table(is.na(afdata1_imputed$FIXBI2)))*100
     ## 54.17391 45.82609
 
 ``` r
-afdata1_imputed %>% 
+missing<- afdata1_imputed %>% 
   group_by(Country) %>% 
-     summarise(sumNA = sum(is.na(FIXBI2)))
+     summarise(sumNA = sum(is.na(FIXBI2))) %>% 
+  print(missing, n=50)
 ```
 
     ## # A tibble: 50 x 2
@@ -57,7 +58,46 @@ afdata1_imputed %>%
     ##  8 Cameroon                    10
     ##  9 Central African Republic    20
     ## 10 Chad                        14
-    ## # ... with 40 more rows
+    ## 11 Comoros                     10
+    ## 12 Congo, Dem. Rep.            17
+    ## 13 Congo, Rep.                 17
+    ## 14 Cote d'Ivoire               10
+    ## 15 Djibouti                     7
+    ## 16 Egypt, Arab Rep.             7
+    ## 17 Equatorial Guinea           11
+    ## 18 Eritrea                     14
+    ## 19 Ethiopia                     8
+    ## 20 Gabon                        8
+    ## 21 Gambia, The                 11
+    ## 22 Ghana                        9
+    ## 23 Guinea                      16
+    ## 24 Kenya                       10
+    ## 25 Lesotho                     10
+    ## 26 Liberia                     14
+    ## 27 Libya                       14
+    ## 28 Madagascar                  11
+    ## 29 Malawi                       9
+    ## 30 Mali                        13
+    ## 31 Mauritania                  10
+    ## 32 Mauritius                    7
+    ## 33 Morocco                      7
+    ## 34 Mozambique                  11
+    ## 35 Namibia                     10
+    ## 36 Niger                        9
+    ## 37 Nigeria                     12
+    ## 38 Rwanda                       9
+    ## 39 Sao Tome and Principe       11
+    ## 40 Senegal                      7
+    ## 41 Seychelles                   9
+    ## 42 Sierra Leone                23
+    ## 43 South Africa                 7
+    ## 44 Sudan                       10
+    ## 45 Tanzania                    10
+    ## 46 Togo                        12
+    ## 47 Tunisia                      7
+    ## 48 Uganda                      10
+    ## 49 Zambia                       5
+    ## 50 Zimbabwe                     6
 
 ``` r
 #generate loop for filling in missing values with zeros
@@ -187,3 +227,38 @@ afdata1_imputed[afdata1_imputed$Country=="Central African Republic", c("Country"
     ## 665 Central African Republic 2015 0.1979719
     ## 666 Central African Republic 2016        NA
     ## 667 Central African Republic 2017        NA
+
+``` r
+#linear imputation for the rest
+library(imputeTS)
+afdata1_imputed$FIXBI2 <- na.interpolation(afdata1_imputed$FIXBI2, option ="linear")
+```
+
+``` r
+afdata1_imputed[afdata1_imputed$Country=="Central African Republic", c("Country","Year", "FIXBI2")]
+```
+
+    ##                      Country Year     FIXBI2
+    ## 645 Central African Republic 1995 0.00000000
+    ## 646 Central African Republic 1996 0.00000000
+    ## 647 Central African Republic 1997 0.00000000
+    ## 648 Central African Republic 1998 0.00000000
+    ## 649 Central African Republic 1999 0.00000000
+    ## 650 Central African Republic 2000 0.00000000
+    ## 651 Central African Republic 2001 0.00000000
+    ## 652 Central African Republic 2002 0.00000000
+    ## 653 Central African Republic 2003 0.00000000
+    ## 654 Central African Republic 2004 0.00000000
+    ## 655 Central African Republic 2005 0.00000000
+    ## 656 Central African Republic 2006 0.00000000
+    ## 657 Central African Republic 2007 0.00000000
+    ## 658 Central African Republic 2008 0.00000000
+    ## 659 Central African Republic 2009 0.00000000
+    ## 660 Central African Republic 2010 0.00000000
+    ## 661 Central African Republic 2011 0.18095896
+    ## 662 Central African Republic 2012 0.13473139
+    ## 663 Central African Republic 2013 0.15581156
+    ## 664 Central African Republic 2014 0.17689172
+    ## 665 Central African Republic 2015 0.19797189
+    ## 666 Central African Republic 2016 0.13198126
+    ## 667 Central African Republic 2017 0.06599063
