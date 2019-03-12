@@ -171,6 +171,13 @@ while (i<=n)
     ## [1] "Zimbabwe  :  0.062347543"
 
 ``` r
+# Histogram after imputation
+hist(afdata1_imputed$FIXBI2, col = 'blue')
+```
+
+![](loop-imputation_files/figure-markdown_github/unnamed-chunk-6-1.png)
+
+``` r
 # Proportion of missing values after imputation
 
 afdata1_imputed %>% 

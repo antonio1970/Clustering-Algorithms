@@ -50,6 +50,12 @@ while (i<=n)
 
 ```
 
+```{r}
+# Histogram after imputation
+hist(afdata1_imputed$FIXBI2, col = 'blue')
+```
+
+
 
 ```{r}
 # Proportion of missing values after imputation
