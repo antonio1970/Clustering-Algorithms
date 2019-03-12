@@ -158,3 +158,32 @@ afdata1_imputed %>%
     ## 15 Mali                         2
     ## 16 Nigeria                      2
     ## 17 Sudan                        1
+
+``` r
+afdata1_imputed[afdata1_imputed$Country=="Central African Republic", c("Country","Year", "FIXBI2")]
+```
+
+    ##                      Country Year    FIXBI2
+    ## 645 Central African Republic 1995 0.0000000
+    ## 646 Central African Republic 1996 0.0000000
+    ## 647 Central African Republic 1997 0.0000000
+    ## 648 Central African Republic 1998 0.0000000
+    ## 649 Central African Republic 1999 0.0000000
+    ## 650 Central African Republic 2000 0.0000000
+    ## 651 Central African Republic 2001 0.0000000
+    ## 652 Central African Republic 2002 0.0000000
+    ## 653 Central African Republic 2003 0.0000000
+    ## 654 Central African Republic 2004 0.0000000
+    ## 655 Central African Republic 2005 0.0000000
+    ## 656 Central African Republic 2006 0.0000000
+    ## 657 Central African Republic 2007 0.0000000
+    ## 658 Central African Republic 2008 0.0000000
+    ## 659 Central African Republic 2009 0.0000000
+    ## 660 Central African Republic 2010 0.0000000
+    ## 661 Central African Republic 2011 0.1809590
+    ## 662 Central African Republic 2012 0.1347314
+    ## 663 Central African Republic 2013        NA
+    ## 664 Central African Republic 2014        NA
+    ## 665 Central African Republic 2015 0.1979719
+    ## 666 Central African Republic 2016        NA
+    ## 667 Central African Republic 2017        NA

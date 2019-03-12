@@ -58,3 +58,7 @@ afdata1_imputed %>%
   count(Country)
 ```
 
+```{r}
+afdata1_imputed[afdata1_imputed$Country=="Central African Republic", c("Country","Year", "FIXBI2")]
+```
+

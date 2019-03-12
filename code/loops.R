@@ -44,5 +44,9 @@ afdata1_imputed %>%
   filter(is.na(FIXBI2)) %>% 
   count(Country)
 
+afdata1_imputed[afdata1_imputed$Country=="Central African Republic", c("Country","Year", "FIXBI2")]
 
+#Maybe linear interpolation
 
+afdata1_imputed$FIXBI2 <- na.interpolation(afdata1_imputed$FIXBI2, option ="linear")
+View(afdata1_imputed)
