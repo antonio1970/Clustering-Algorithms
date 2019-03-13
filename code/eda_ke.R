@@ -26,7 +26,7 @@ afdata <-subset(knowledge, knowledge$Country %in% afcountries)
 
 # Select a set of variables to be used in the empirical analysis
 
-afdata1 <- afdata %>% 
+afdata <- afdata %>% 
   select(Country, Year, REGQU, RULEL, PRIMARY, SECONDARY, TERTIARY,TELEP3,FIXBI2,INTERN3, PATEN2, STJOU2, TNTBA)
 
 
@@ -48,58 +48,58 @@ func1 <- function(x){
   ifelse(x %in% ca, "Central Africa", ifelse(x %in% ea,"East Africa", ifelse(x%in% sa, "South Africa", ifelse(x%in% wa, "West Africa", ifelse(x%in% na, "North Africa", "otros")))))
 }
 
-afdata1$region <- func1(afdata1$Country)
-afdata1$region = as.factor(afdata1$region)
+afdata$region <- func1(afdata$Country)
+afdata$region = as.factor(afdata$region)
 
 
 
 # Number of countries included in the sample 
 
-countrylist = unique(afdata1$Country)
+countrylist = unique(afdata$Country)
 length(countrylist)
 
 # Number of time periods 
 
-yearlist = unique(afdata1$Year)
+yearlist = unique(afdata$Year)
 length(yearlist)
 
 # Number of missing values (% percentage)
 
-prop_complete(afdata1)
-pct_miss(afdata1)
+prop_complete(afdata)
+pct_miss(afdata)
 
 #pattern of missing values in each variable
-miss_var_summary(afdata1[, c(3:13)])
+miss_var_summary(afdata[, c(3:13)])
 
 
 
 # using GGally to show a complete picture of the features to be used in the analysis
 
-ggpairs(afdata1[, c(3:13)])
+ggpairs(afdata[, c(3:13)])
 
 # Correlation matrix
 
-m = cor(afdata1[, c(3:13)], use ="pairwise")
+m = cor(afdata[, c(3:13)], use ="pairwise")
 m
 corrplot(m, method = 'number', type = 'upper')
 
 
 # Summary of the variables for different time periods
 
-afdata2011 = subset(afdata1, Year>=2011)  # 2011-2017 time period
+afdata2011 = subset(afdata, Year>=2011)  # 2011-2017 time period
 summary(afdata2011)
 plot(afdata2011, col= afdata2011$region)
 
-afdata0610 = subset(afdata1, Year>=2006 & Year<2011) 
+afdata0610 = subset(afdata, Year>=2006 & Year<2011) 
 summary(afdata0610)
 plot(afdata0610, col = afdata$region)
 
-afdata0105 = subset(afdata1, Year>=2001 & Year<2006)
+afdata0105 = subset(afdata, Year>=2001 & Year<2006)
 summary(afdata0105)
 plot(afdata0105, col =afdata$region)
 
 # Save file as csv and excel file
 
-write.csv(afdata1, file= "afdata1.csv", row.names = FALSE)
-write.xlsx(afdata1, file ="afdata1.xlsx", row.names = FALSE)
+write.csv(afdata, file= "afdata.csv", row.names = FALSE)
+
 
