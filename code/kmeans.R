@@ -9,6 +9,11 @@ ggpairs(cbind(scaled_data, Cluster=as.factor(scaled_data_k$cluster)),
         axisLabels="none", switch="both")
 
 
+## list of cluster assignments
+o=order(scaled_data_k$cluster)
+lclust<-data.frame(data$Country[o],data$Year, scaled_data_k$cluster[o])
+
+
 bss <- numeric()
 wss <- numeric()
 
@@ -32,3 +37,6 @@ p4 <- qplot(1:10, wss, geom=c("point", "line"),
   scale_x_continuous(breaks=seq(0, 10, 1))
 
 grid.arrange(p3, p4, ncol=2)
+
+
+fviz_cluster(scaled_data_k,data = scaled_data)
