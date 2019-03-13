@@ -1,3 +1,4 @@
+library(tidyverse)
 # Read the KE Index and create a dataframe
 
 kei <- read.csv("../Clustering-Algorithms/data/keindex.csv")
@@ -7,6 +8,7 @@ kei<-kei[order(kei$Year),]
 
 
 # Merge two files with another column with the KEI index. Initial check
+afdata = read.csv("../Clustering-Algorithms/data/afdata.csv", header = TRUE, dec = ".", sep = ",")
 
 class(afdata$Country)
 levels(afdata$Country)
