@@ -75,7 +75,7 @@ for (col in numeric_columns) {
   )
 }
 
-# Generate a list of dataframes
+# Generate a list of dataframes. Knns using k = 5
 
 df_list <- list(imputed_data_educ, imputed_data_ict, imputed_data_innovation, imputed_data_inst)
 library(reshape)
