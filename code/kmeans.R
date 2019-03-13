@@ -1,4 +1,13 @@
-scaled_data <- as.data.frame(scale(data[, c(3:13)]))
+##
+library(GGally)
+library(ggplot2)
+library(factoextra)
+library(pdp)
+
+afdata = read.csv("../Clustering-Algorithms/data/afdata_imputed.csv", header = TRUE, dec = ".", sep = ",")
+afdata$X = NULL
+
+scaled_data <- as.data.frame(scale(afdata[, c(3:13)]))
 
 scaled_data_k <-kmeans(scaled_data, centers = 4)
 
@@ -11,7 +20,7 @@ ggpairs(cbind(scaled_data, Cluster=as.factor(scaled_data_k$cluster)),
 
 ## list of cluster assignments
 o=order(scaled_data_k$cluster)
-lclust<-data.frame(data$Country[o],data$Year, scaled_data_k$cluster[o])
+lclust<-data.frame(afdata$Country[o],afdata$Year, scaled_data_k$cluster[o])
 
 
 bss <- numeric()
