@@ -1,6 +1,7 @@
 library("caret") # install.packages("RANN")
+library(RANN)
 
-afdata = read.csv("../Clustering-Algorithms/data/afdata.csv", header = TRUE, dec = ".", sep = ",")
+afdata = read.csv("../Clustering-Algorithms/data/afdata_full.csv", header = TRUE, dec = ".", sep = ",")
 
 # Type of variables
 
@@ -30,11 +31,11 @@ while (i<=n)
 # Select for imputation of KNNs
 
 afdata <- afdata %>% 
-  select(Country, Year, PRIMARY, SECONDARY, TERTIARY)
+  select(Country, Year, PATEN2, STJOU2)
 
 # inpute data
 
-k_value=3
+k_value=5
 
 
 
@@ -60,7 +61,7 @@ knn_imput = function(afdata) {
   imputed_data
 }
 
-imputed_data = knn_imput(afdata)
+imputed_data_innovation = knn_imput(afdata)
 
 # "mark" imputed data
 
@@ -73,4 +74,10 @@ for (col in numeric_columns) {
     format(round(imputed_data[indices, col], 3), nsmall = 3)
   )
 }
+
+
+df_list <- list(imputed_data_educ, imputed_data_ict, imputed_data_innovation, imputed_data_inst)
+library(reshape)
+data <-merge_recurse(df_list)
+write.csv(data, "afdata_imputed.csv")
 
