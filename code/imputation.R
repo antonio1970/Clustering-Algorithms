@@ -1,6 +1,10 @@
 library("caret") # install.packages("RANN")
 
-afdata = read.csv("afdata.csv", header = TRUE, dec = ".", sep = ",")
+afdata = read.csv("../Clustering-Algorithms/data/afdata.csv", header = TRUE, dec = ".", sep = ",")
+
+# Type of variables
+
+lapply(afdata, class)
 
 #impute FIXBI2 filling up with zeros NAs until find a non-NA value
 
