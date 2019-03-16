@@ -35,7 +35,7 @@ lclust<-data.frame(afdata$Country[o],afdata$Year, scaled_data_k$cluster[o])
 bss <- numeric()
 wss <- numeric()
 set.seed(1234)
-for(i in 1:10){
+for(i in 1:20){
   
   # For each k, calculate betweenss and tot.withinss
   bss[i] <- kmeans(scaled_data, centers=i)$betweenss
@@ -43,14 +43,14 @@ for(i in 1:10){
 }
 
 # Between-cluster sum of squares vs Choice of k
-p1 <- qplot(1:10, bss, geom=c("point", "line"), 
+p1 <- qplot(1:20, bss, geom=c("point", "line"), 
             xlab="Number of clusters", ylab="Between-cluster sum of squares") +
-  scale_x_continuous(breaks=seq(0, 10, 1))
+  scale_x_continuous(breaks=seq(0, 20, 1))
 
 # Total within-cluster sum of squares vs Choice of k
-p2 <- qplot(1:10, wss, geom=c("point", "line"),
+p2 <- qplot(1:20, wss, geom=c("point", "line"),
             xlab="Number of clusters", ylab="Total within-cluster sum of squares") +
-  scale_x_continuous(breaks=seq(0, 10, 1))
+  scale_x_continuous(breaks=seq(0, 20, 1))
 
 # Plot. It appears that the optimal number could be k = 4
 
