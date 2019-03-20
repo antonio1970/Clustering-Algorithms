@@ -15,6 +15,8 @@ scaled_data <- as.data.frame(scale(afdata[, c(3:13)]))
 
 scaled_data_k <-kmeans(scaled_data, centers = 4)
 
+plot_clus_coord(scaled_data_k, afdata[, c(3:13)])
+
 # Scatter plots for all variables and higlighting cluster groups
 ggpairs(cbind(scaled_data, Cluster=as.factor(scaled_data_k$cluster)),
         columns=1:11, aes(colour=Cluster, alpha=0.5),
