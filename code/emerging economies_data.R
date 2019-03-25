@@ -32,3 +32,4 @@ sub_kei<-sub_kei[order(sub_kei$Year),]
 
 # Merge both datasets
 combine = merge(sub_kei, knowledge, by=c("Country", "Year"),all.x = TRUE, all.y = TRUE)
+write.csv(combine, file="emerging_data.csv")
