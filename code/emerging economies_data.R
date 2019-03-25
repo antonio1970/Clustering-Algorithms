@@ -29,10 +29,6 @@ sub_kei <- kei %>% filter(kei$Country %in% emergingcountries) %>% droplevels
 levels(sub_kei$Country)
 sub_kei<-sub_kei[order(sub_kei$Year),]
 
-sub_knowledge <- knowledge %>% filter(knowledge$Country %in% emergingcountries) %>% droplevels
-levels(sub_knowledge$Country)
 
 # Merge both datasets
-full <-merge(x = sub_kei, y= knowledge, by = c("Country", "Year"))
-
 combine = merge(sub_kei, knowledge, by=c("Country", "Year"),all.x = TRUE, all.y = TRUE)
