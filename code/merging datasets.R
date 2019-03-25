@@ -16,7 +16,7 @@ levels(afdata$Country)
 class(kei$Country)
 levels(kei$Country)
 
-# Both factors have differente levels
+# Both factors have different levels
 
 
 combined <- sort(union(levels(afdata$Country), levels(kei$Country)))
