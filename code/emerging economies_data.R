@@ -32,4 +32,7 @@ sub_kei<-sub_kei[order(sub_kei$Year),]
 
 # Merge both datasets
 combine = merge(sub_kei, knowledge, by=c("Country", "Year"),all.x = TRUE, all.y = TRUE)
-write.csv(combine, file="emerging_data.csv")
+
+emerging_data <-combine %>% select(Country, Year, KEI_Index,REGQU, RULEL, PRIMARY, SECONDARY, TERTIARY,
+                   TELEP3,FIXBI2,INTERN3, PATEN2, STJOU2, TNTBA)
+write.csv(emerging_data, file="emerging_data.csv")
