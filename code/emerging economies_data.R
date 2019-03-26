@@ -17,22 +17,43 @@ kei$X= NULL
 colnames(kei) <- c("Country", "Year", "KEI_Index")
 kei<-kei[order(kei$Year),]
 
-# Select subset of countries
+# Check datasets before merging, dimensions etc.
 
-emergingcountries <- c ("Argentina",	"Brazil", "Colombia", "Chile", "China", "Czech Republic","Egypt",
-                  "Greece",	"Hungary", "India", "Indonesia", "Israel", "Malaysia", "Mexico", "Pakistan", "Peru", "Philippines", "Poland", "Qatar", "Russian Federation",
-                  "Saudi Arabia", "Taiwan", "Thailand", "Turkey", "United Arab Emirates")
+dim(kei)
+dim(knowledge)
 
-# KE index and other variables only for emerging economies
-
-sub_kei <- kei %>% filter(kei$Country %in% emergingcountries) %>% droplevels
-levels(sub_kei$Country)
-sub_kei<-sub_kei[order(sub_kei$Year),]
-
+length (unique(knowledge$Country))
+length(unique(kei$Country))
 
 # Merge both datasets
-combine = merge(sub_kei, knowledge, by=c("Country", "Year"),all.x = TRUE, all.y = TRUE)
 
-emerging_data <-combine %>% select(Country, Year, KEI_Index,REGQU, RULEL, PRIMARY, SECONDARY, TERTIARY,
-                   TELEP3,FIXBI2,INTERN3, PATEN2, STJOU2, TNTBA)
-write.csv(emerging_data, file="emerging_data.csv")
+combine <- full_join(kei, knowledge)
+length(unique(combine$Country))
+dim(combine)
+
+
+head(combine)
+tail(combine)
+
+table(combine$Year)
+
+#
+
+combine<-combine[order(combine[, "Country"], combine[, "Year"]),]
+
+
+emergingcountries <- c ("Argentina",	"Brazil", "Colombia", "China", "Czech Republic","Egypt, Arab Rep.",
+                        "Greece",	"Hungary", "India", "Indonesia", "Israel", "Malaysia", "Mexico", "Pakistan", "Peru", "Philippines", "Poland", "Qatar", "Russian Federation",
+                        "Saudi Arabia", "Thailand", "Turkey", "United Arab Emirates")
+
+sub_combine <- combine %>% filter(combine$Country %in% emergingcountries) 
+sub_combine<-sub_combine[order(sub_combine$Country),]
+
+sub_combine <- sub_combine %>% 
+  select(Country, Year, REGQU, RULEL, PRIMARY, SECONDARY, TERTIARY,TELEP3,FIXBI2,INTERN3, PATEN2, STJOU2, TNTBA)
+
+
+
+write.csv(sub_combine, file ="emerging_economies.csv")
+
+
