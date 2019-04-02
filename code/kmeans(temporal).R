@@ -30,6 +30,26 @@ summary(afdata0105)
 scaled_data_2011 <-as.data.frame(scale(afdata2011[,c(3:13)]))
 k2011 <-kmeans(scaled_data_2011, centers = 4)
 
+# labels to clusters and bind to the original data
+
+x <- data.frame(scaled_data_2011, K=k2011$cluster)
+
+ggRadar(data= x, aes(color= K), interactive = FALSE)
+
+p <-ggRadar(data= x, aes(color= K), interactive = FALSE)
+p + ggtitle("K-means. Period: 2011-2017")
+
+
+
+devtools::install_github("ricardo-bion/ggradar", 
+                         dependencies=TRUE)
+library(ggradar)
+
+suppressPackageStartupMessages(library(dplyr))
+library(scales)
+library(tibble)
+
+
 # Cluster plot
 fviz_cluster(k2011, data= scaled_data_2011, main ="Cluster-2011-2017", geom = "point", frame.type = "norm")
 

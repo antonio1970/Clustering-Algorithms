@@ -50,7 +50,7 @@ sub_combine <- combine %>% filter(combine$Country %in% emergingcountries)
 sub_combine<-sub_combine[order(sub_combine$Country),]
 
 sub_combine <- sub_combine %>% 
-  select(Country, Year, REGQU, RULEL, PRIMARY, SECONDARY, TERTIARY,TELEP3,FIXBI2,INTERN3, PATEN2, STJOU2, TNTBA)
+  select(Country, Year, KEI_Index, REGQU, RULEL, PRIMARY, SECONDARY, TERTIARY,TELEP3,FIXBI2,INTERN3, PATEN2, STJOU2, TNTBA)
 
 
 
