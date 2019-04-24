@@ -1,25 +1,65 @@
 ##
 library(GGally)
+library(corrplot)
 library(ggplot2)
 library(factoextra)
 library(pdp)
 library (mclust)
-# Readind data and  use scale to normalize 
+library(ggiraphExtra)
+
+# Reading data and  use scale to normalize 
 
 afdata = read.csv("../Clustering-Algorithms/data/afdata_imputed.csv", header = TRUE, dec = ".", sep = ",")
 
 afdata$X = NULL
 
+
+# Data description. 50 countries and 23 years
+
+length(unique(afdata$Country))
+length(unique(afdata$Year))
+
+# Check missing values, Already imputed missing values
+anyNA(afdata)
+
+
+# using GGally to show a complete picture of the features to be used in the analysis
+
+ggpairs(afdata[, c(3:13)], title = "Cross-variable Plot" , upper=list(continuous="blank"))
+
+# Correlation matrix
+
+m = cor(afdata[, c(3:13)], use ="pairwise")
+m
+corrplot(m, method = 'number', type = 'upper')
+
+# Scaled data
+
 scaled_data <- as.data.frame(scale(afdata[, c(3:13)]))
 
 # Mixture of models algorithm trying from 2 to 10 models
-mclust<- Mclust(scaled_data, G=6)
+mclust<- Mclust(scaled_data, G=2:10)
 
+output <-clustCombi(mclust)
 
-# 6 models were selected
-mclust
+summary(output)
+summary(mclust, parameters = TRUE)
+
+#  models were selected
 plot(mclust, what="BIC")
 plot(mclust, what="classification")
+plot(output, what = "entropy") 
+plot(output, what = "tree")
+
+
+
+x <- data.frame(scaled_data, K=mclust$classification)
+
+ggRadar(data= x, aes(color= K), interactive = FALSE)
+
+p <-ggRadar(data= x, aes(color= K), interactive = FALSE)
+p + ggtitle("Mclust- k = 4:10")
+
 
 
 # Scatter plots for all variables and higlighting cluster groups

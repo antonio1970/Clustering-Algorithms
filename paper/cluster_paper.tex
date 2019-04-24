@@ -1,0 +1,157 @@
+\documentclass[11pt]{article}
+
+% Language & Input
+\usepackage{textcomp}
+\usepackage[english]{babel} % Language: English
+\usepackage[ansinew]{inputenc} % Input
+% Font
+\usepackage[T1]{fontenc} % Font encoding
+\usepackage{lmodern,microtype} % Typeface
+% Math
+\usepackage{amsmath,amsthm,amssymb,amsfonts} % AMS math
+\usepackage{dsfont,mathrsfs,ushort} % Math style
+% Style
+\usepackage{titlesec,titling} % Section titles
+\usepackage[nohead]{geometry} % Page & margins
+\usepackage{setspace} % Spacing
+\usepackage{enumitem,booktabs} % Tables & lists
+% References
+\usepackage[authoryear]{natbib}
+% Addons
+\usepackage{pstricks} % Figures
+\usepackage{sgamevar} % Strategic form games
+% Hyperlinks
+\usepackage{hyperref}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% Frontmatter
+\title{\bfseries\Large  Knowledge Economy in African countries: A Model Based Clustering Approach \vspace*{-1ex}}
+\author{\large\itshape Antonio Rodr\'{i}guez Andr\'{e}s\thanks{The authors gratefully acknowledge financial support from the Czech Science Foundation (GA-1656). The usual disclaimer applies. } \\ Simplice Asongu\\ Voxi Amavilah}
+\date{\today}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% Style & Structure
+% Page, spacing & lists
+\geometry{left=40mm,right=40mm,top=30mm,bottom=30mm}
+\setstretch{1.5}
+\setenumerate{label=\small(\roman*)}
+% Hyperlinks
+\hypersetup{colorlinks=true,pdfnewwindow=true,pdfstartview=FitH,%
+pdftitle="",pdfauthor="",%
+urlcolor=black,citecolor=blue!90!red!45!black,linkcolor=red!90!black}
+% Games
+\renewcommand{\gamestretch}{2}
+\gamemathtrue
+% Miscellaneous
+\renewcommand{\qedsymbol}{\ensuremath{\blacksquare}} %QED symbol
+% Titles
+\titleformat{\section}[block]{\centering\large\bfseries}{\thesection.}{0.5em}{}
+\titleformat{\subsection}[block]{\flushleft\bfseries}{\thesubsection.}{0.5em}{}
+\titleformat{\subsubsection}[runin]{\normalsize\itshape}{\bfseries\thesubsubsection.}{0.5em}{}[.--\:]
+\renewcommand{\thesubsubsection}{\arabic{section}.\arabic{subsection}.\alph{subsubsection}}
+\titlespacing{\section}{0ex}{6ex}{3ex}
+\titlespacing{\subsection}{0in}{3ex}{1.5ex}
+\titlespacing{\subsubsection}{0mm}{2ex}{0.5em}
+\renewcommand{\linespread}[1]{\setstretch{1}}
+
+\begin{document}
+
+\maketitle
+
+\begin{abstract}
+
+In particular, we use a sample of 43 African countries over the period 1996--2007.  We apply model based clustering to identify knowledge economy profiles, and their compositional dynamics. We also offer some policy recommendations that can give shed ligh on the national policies towards a more knowledge oriented environment.
+
+\textbf{JEL classification}
+\smallskip
+
+\textbf{Keywords}: Africa, model based clustering, knowledge economy, unsupervised machine learning
+\end{abstract}
+
+\section{Introduction}
+With varying degrees of precision all three theories of economic growth (classical, including Marxian, neoclassical, and new growth) have acknowledged the importance of technology and technological change. Technology itself is a result of past innovative activities (Dodgson and Gann, 2018, Chapter 2). For Marx (1906; 1848) innovations, and the technologies they give rise to, displace labor, lower wages, and oppress workers. Schumpeter (1942; 1934; 2005) used his concept of ''gales of creative destruction'' to illustrate that innovations are a key driver of economic growth and productivity that can both create and destroy jobs, and often do so simultaneously \cite{Becker2005}. The  (Dodgson and Gann, 2018, pp.12-32). Despite their known benefits, both technology and innovation are challenging to define and quantify due to their complex nature. In the case of developing and emerging economies measurement difficulties have led to the assumption of homogenous regional dummies as representations of innovations and technology. The basis of the argument is that since investment in innovative activities in these countries is small, innovations are often assumed not to exist there, so that in the absence of domestic innovation, technology is truly exogenous manna from abroad (heaven). In Africa, particularly, the socalled \emph{Africa dummy} has become commonplace in growth regressions (Barro, 1991; Collier and Gunning, 1999a; 1999b; Collier, 2007; Barro and Lee, 1993; Mauro, 1995; Sachs and Warner, 1995; Easterly and Levine, 1997; Burnside and Dollar, 1997; Temple, 1998; Knedlil and Reinowski, 2007; Englebert, 2000; Jerven, 2001; Jerven, undated; Easterly, 2001; Azam, Fosu, and Ndungu, 2002). While the results of these studies are in line with the Solow-Swan tradition, they continue to leave the growth effects of technology and technological change essentially unexplained.
+
+The continued use of the \emph{Africa dummy} to capture the effects of innovation and technology on growth assumes that Africa is distinctly different from other regions of the world, but uniquely identical (homogeneous) within in all possible manners, including technological \cite{Conway93}. The assumption is simply mistaken! \cite{Gyimah04} used an expanded dynamic panel Solow model to examine the effects of \emph{health human capital} on the economic growth of Sub-Saharan African and OECD countries. They found that the difference between the two groups of countries is only of the order of magnitude, not of arithmetic signs; health human capital influenced economic growth positively in both groups of countries, suggesting that Africa is not different! \cite{Amavilah06} utilized non--parametric indices and found that the technical capability of 14 African countries is heterogeneous (diverse), and concluded that \emph{performance policies that overlook the diversity of technical capability are potentially misleading, ineffective, and perhaps even damaging (growth retarding)} (p. 205). \cite{Asongu08} conceived a stylized framework in which African knowledge economies divide into leaders and laggards relative to the knowledge frontier. Within these two groups different countries perform differently on different dimensions of the knowledge economy, with South Africa leading in innovations, Botswana and Mauritius in institutional elements, North African countries in education, and so on. From these two examples alone, and we expand them in the literature review below, it is abundantly clear that not only is the assumption of technological homogeneity unreasonable, but also that it appears that the technical capabilities of African countries, and by extension all countries, are ever-changing, sometimes in convergent, and other times in divergent, ways.  This understanding holds out possibilities for expanding research into the direction of leader-follower models of innovation like one described by \cite{Stiglitz15} for Nordic countries.
+
+Therefore, the main objective of this paper is to take a first step in using unsupervised machine learning techniques to build up a multidimensional national index of innovation that can be applied to emerging market and developing countries. We optimize/caliberate the index with data from 43 African countries, but the aim is to make it more rigorous than the traditional aggregate innovation indices to be applicable to all countries. The objective is an important undertaking for both policy and further research, because existing indices are too much of summaries of lose, albeit relevant, information. Consequently, the results of such indices are quite sensitive to the arbitrary choices made in constructing them. In fact, most existing indices are not based on careful empirical research, but rather on arbitrary rates of substitution between various components of indices. This is an important problem to pursue, because although recent developments in this field involve composite measures of innovation, there is still a gap in the literature regarding multidimensionality as well as applicability of these measures to African and other developing and emerging market economies. Again, previous empirical studies have employed aggregate indexes of innovation, and the aggregation ignores the relative importance of each dimension, see, e.g.,. Allard (2015), Archibugi and Coco (2004; 2005), and Khayyat and Lee (2012).  Moreover, most of these indices are linear and have unrealistic rates of substitution. Acknowledging that the economic structure and dynamics of most African and other developing and emerging market economies differ greatly from those of developed economies for which traditional innovation measures (input and outputs) are more appropriate is an essential step to addressing the problem. 
+
+As we outline further in the literature review section below, to derive a multi-dimensional measure of innovation, we considered several unsupervised machine-learning algorithms such as factor analysis (henceforth, FA) and support vector machine (henceforth, SVM) learning approach. In the end we chose the (Gaussian, correct, Tony?) mixture model (GMM) as the most appropriate analytical structure for examining Africa \textquotesingle s KE clusters as we describe it later in this paper. For it suffices to say a GMM is the appropriate framework because we suspect overlapping or non-exclusive as well as fuzzy (soft) clustering of a sample of the African we examine. In this instance, clusters overlap because these countries are all African countries; clusters are fuzzy because African countries are not 100% identical, one reason we argued in the preceding that regional dummies like the “Africa dummy” do not tell the whole story.  For example, from a theoretical point of view, one way to approach the innovation activity is to employ a production function as suggested previous literature going back to the work by Griliches (1979), and Jaffe (1986). In this context, the output is the degree of new technology produced in any particular country that is explained by multiple inputs. Our GMM innovation index goes one step further, because is inspired by the innovation input-output perspective that includes other relevant dimensions, taking into account the Innovation Systems approach (Lundvall, 1992; Nelson, 1993).  Thus, it is composed of three or four? main sub-indices: The first two, relate to innovation enablers and innovation outcomes to capture the domestic input/output effort in innovation, whereas the third dimension captures the international diffusion of technology. Combined, R&D expenditures, and institutional, social and structural factors become innovation enablers that, in low-income countries particularly, have to be taken into account to complement conventional metrics and to capture the role played by local capabilities in the process of creation and diffusion of knowledge.??? The resulting methodology can be useful as a tool for decision-making and for comparing results with other known innovation indices. In addition, this index can be also valuable for countries’ policymakers in benchmarking both their technological performance and policy for promoting technological capability as the index allows assessment of intra- and inter-Africa technological diffusion and convergence (divergence) and subsequent implications for growth (Barro and Sala-i-Martin, 1997) and club/network externalities (Quah, 1997).
+
+The structure of this paper is as follows: In Section 2 below we review the literature that informs the methodology we put forward in Section 3. We describe the methodology in three sub-section. The first sub-section outlines the GMM theory and algorithms. The second sub-section deals with data (key variables and so on). The third sub-section summarizes how the GMM was actually used to generate the results. Section 4 presents and discussed the results, while Section 5 concludes the paper with the implications for policy and further research.
+
+
+\section{Literature review}
+\subsection{Innovations, Technology, and Knowledge Economy}
+
+All three theories of economic growth have acknowledged the importance of technology and technological change. In classical theory growth is constrained by diminishing returns to labor given the fixed quantity and quality of land. Technological advances increases productivity, but since high productivity leads to even higher population growth than productivity growth there is no to escape the Malthusian trap. A cording to neoclassical theory the rate of technological advancement increases economic growth, but the causal link is unidirectional in that economic growth does not influence technological change. In this sense technology and technological change are both chance happenings. Hence, although the growth accounting studies initial by Solow (1956; 1956) and Swan (1956{2002) demonstrate that clearly that a major source of economic growth is due to something other than the ''proximate causes of growth'' (Lewis, 1965[1955]), the problem for neoclassical models of growth has been the assumption of exogenous technological change (McCullum, 1996; Rogers, 2003). This is the problem new growth theories set out to address (Romer, 1986; 1990; Lucas, 1988; 1993; Aghion and Howitt, 1992; cf. Islam, 2004; Parente, 2001). New growth theories make technological change dependent on the choices free economic agents make as they cope with scarcity. In market economies the choice involve human capital accumulation, discovery, and all productivity-, efficiency-, and welfare- enhancing economic behavior which ignite ''perpetual growth motion''. The motion of growth can then be accelerated by initial (pre-) conditions such as economic freedome, rule of law and associated property and contractual rights, markets, and policies relating to the creation of incentive structures and mechanisms, encouraging saving and investment in physical capital, R \& D, international trade, and as pointed out already improving the quantity and quality of human capital. There is an active debate between proponents of the the Washington Consensus on the one hand and the Beijing model on the other about how much difference policy makes to growth, but no wide disagreement about the endogenous nature of innovation and technology and their implications for long-run growth as demonstrated by Romer (1990). 
+
+Despite leading global innovation in specific areas such as mobile technology, most African countries are farther away from the technological frontier than not only developed economies but also developing countries in other regions. The economic theory of innovation and technology posits that countries should be able to gain even more from investments in adapting inventions to their local conditions, that is adopting innovations. Put differently, both their marginal utility and marginal product from adopting technological knowledge should be higher for developing and emerging economies than for developed countries. However, in these economies, the resources devoted to traditional inputs for innovation activities such as R\&D expenditures, are lower (both in absolute terms and in terms of GDP) than in the developed world, which prevent economies of scale. Moreover, Parente and Prescott (1994) argue that barriers to technology adoption are also very high in most of the the developing and emerging economies.
+For these reasons, when measuring and analyzing innovation in the emerging market and developing countries context, it is important to take into account a broader concept of innovation to include organizational and marketing changes, for example (Adebowale et al.,2014). Broadly defined these types of innovations are usually associated with ICT use and are highly relevant in the emerging market and developing countries. For instance, internet fosters technological diffusion and innovation, favoring the development of new products and processes, new models of cooperation among firms, and new business models, many of them based on online platforms (Laursen and Salter, 2006; OCDE??, 2016a). These innovations allow companies to identify new clients, new needs and new ways to provide services in very different contexts (Constantinos and Anderson 2006; World Bank, 2016).  
+
+Furthermore, the specific characteristics of diffusion of innovations in developing countries such as African ones require consideration of complementarities between other sources of knowledge, different from traditional R\&D inputs, such as those associated with the use of ICT. The relationships between innovation and technology have demonstrated to be a key factor for capacity building in the African countries. According to UNCTAD (2012), technology and innovation are essential for building capabilities at the enterprise level; for promoting technological change in small and large enterprises by boosting interactive learning and for ICT and private sector-led development. In the developing world, the transformations related to the digital revolution may generate spectacular changes in productive activities of many poor countries along with improvements in the access to basic services such as health, education online banking or transport, improving living conditions (Parker and Appelbaum, 2012; UNCTAD, 2017). The impacts of ICT on innovation, productivity and economic growth open-up new opportunities for economic development (United Nations, 2015, Torero and von Braun, 2006). Given the key role played by innovation and ICT use for economic development, the measurement and identification of those elements that may facilitate and support the environment where innovations are more likely to succeed turns out to be a key issue for economic research (Branscomb and Keller, 1998). However, the literature on the relationships between ICT and innovation is scarce and the potential links between innovation and ICT remain unexplored in developed as well as developing countries. Some researchers find that a priori innovation experience and/or culture may influence both the extent to, and the way in, which these technologies are employed (Hempell 2005; Karlsson et al. 2010; Tiy et al. 2013). Conversely, ICT use can itself be regarded as a utility for innovation since it facilitates the undertaking of innovative activities (Nardelli 2012; Schubert and Leimstoll 2007). At the international level, however, no studies focus on the possible relationships between innovation and ICT use. A large portion of the literature on innovation focuses on the determinants of patenting (Borghi et al. 2010; Dominicis et al. 2013; Greunz 2004; Tappeiner et al. 2008; Vinciguerra et al. 2011). Nevertheless, the literature on ICT adoption is scantier and mainly related to the explanatory factors of ICT use at household level (Billon et al. 2008, 2009; Tranos and Gillespie 2008; Vicente and Lopez 2011). 
+
+For developing and emerging countries, as far as we know, there are no studies about the relationships between ICT adoption and innovation at the country level. Thus, it remains unclear how ICT use and innovation are related and how they influence growth and transition to the KE in Africa.. Andres, Amavilah, and Asongu (217) made effort in that direction, and we extend their work elsewhere. In this paper we propose a model where the ICT use is considered as an exogenous variable and connects it to a number of innovation indicators in African countries following works by Archibugi and Coco (2004; 2005), Billon, Marco, and Lera-Lopez (2016), Allard (2015), Griffiths and Kickul (2008), and Khayyat and Lee (2012). However, the formal literature on the determinants of the national innovative capacity have identified as major factors: entrepreneurship, attitude toward entrepreneurship, attitude toward risk-taking, educational infrastructure and local school and training systems, physical infrastructure, research and development institutions, pro-business attitude, venture capital accumulation, government support of innovative activities, development time allowance for cumulative effects, cost of innovation and formal institutions(for instance, Furman, Porter, and Stern, 2002; Gelebo, Plekhanov, and Silve, 2015, Andrés, Asongu, and Amavilah (2015). Since it is impossible to deal with all that complexity, we propose a new metric to quantify innovation that can be applied in different contexts, but we test only data for African countries. 
+
+\section{Mixture Gaussian Models and Knowledge Economy }
+
+The proliferation of communication technologies is producing massive amounts of data thereby hiding valuable information. Efforts to discover knowledge from the data – now called ''big data'' or ''data science'' can now be likened to mining earth for minerals that dominate past centuries. Although data mining and pattern recognition tools have been around for many years (the model we use here is based on Johann C.F. Gauss’s, 1777-1855) work, in economics application has limited few studies on neighborhood/agglomeration (Durlauf, 2004), club (Chatterji, 1992), and network (Shapiro and Varian, 1999) effects. Use of GMM is still not commonplace. Trovato and Waldmann (200) applied a multivariate mixture model to test for cross-country growth heterogeneity. Se and Thorson (??) investigated the distribution of global internet bandwith using s mixture model. They found that even the distribution is clustered it does not increasing concentration of bandwith in rich economies, a finding that informs understanding of the global digital divide. This study is closest to the paper in that we want to find out how many clusters characterize the African KE and how is the distribution of it.
+
+Vollmer, Holzmann, Ketterer, Klasen, and Canning (2013) examine distribution of income, life expectancy, and education for 1960-2000. A notable implication of this paper is that clusters change. In this exact example, there were only two clusters in 1960, and there were three in 2000. Grundler and Krieger (2015) developed a support vector machines mathematical algorithm to recognize democracy from patterns of available data and then build a democracy index from this clustering. Our model is similar in spirit to this paper as well.
+
+Finally, canonical correlation analysis help Billon, Lera-Lopez, and Marco (2017) helped them to investigate patterns of innovation and ICT use in EU. They detected two patterns each driven by distinct factors. While this is not a mixture model, it informs the interpretation of our results.
+
+\section{Sample and variables}
+
+We investigate 1995-2017 data for the following African countries: Algeria, Angola, Benin, Botswana, Burkina Faso, Burundi, Caco Verde, Cameroon, Central African Republic, Chad, Comoros, Cote d’Ivoire, Congo Democratic Rep, Djibouti,Egypt, Equatorial Guinea, Eritrea, Ethiopia, Gabon, Ghana, Guinea, Kenya, Lesotho, Liberia, Libya, Madagascar, Malawi, Mali, Mauritania, Mauritius, Morocco, Mozambique, Namibia, Niger, Nigeria, Congo Republic, Rwanda, Sao Tome and Principe, Senegal, Seychelles, Sierra Leone, South Africa, Sudan, Tanzania, The Gambia, Togo, Tunisia, Uganda, Zambia, and Zimbabwe. Because of data availability  of the selected  features (institutional indicators are available since 1996),  observations were selected 
+
+
+We seek to discover knowledge from patterns of data on the following key variables underlying the innovation. We examine 4-6 clusters, and build a GMM index capable of competing and completing traditional indices like ArCo, TAI, etc. Table 2 we characterized key variables and data sources.
+
+
+\begin{table}[]
+\begin{tabular}{lll}
+Variable (Code)     & Definition & Data source \\
+Primary (?)         &            &             \\
+Secondary (?)       &            &             \\
+Tertiary (?)        &            &             \\
+Telephone           &            &             \\
+Fixed Broadband (?) &            &             \\
+Internet Use (?)    &            &             \\
+Patents (?)         &            &             \\
+Spell out (STJOU2)  &            &             \\
+Spell out (REGQU)   &            &             \\
+Spell out (RULEL)   &            &             \\
+Spell out (TNTBA)   &            &            
+\end{tabular}
+\end{table}
+
+ Summary statistics and the correlation matrix of all variables employed in the empirical analysis are displayed in Table 3.
+
+
+
+
+
+\section{Methodology}
+
+In many situations, policy makers should group objects into homogeneous groups. Cluster analysis can be desribed as a multivariate technique to generate homogenous groups of objects by their characteristics. The main idea is that the data in the same cluster are more similar to each other than data in other clusters.  In cluster analysis the dataset is completely unlabeled, and therefore deciding on whether the learned model is optimal is much more complicated than in supervised learning.  
+
+\smallskip
+
+A variety of clustering algorithms have been proposed in the formal literature in recent years.  The most relevant clustering algorithms can be classified in two groups: partitional and hierarchical clustering. One alternative method is model based cluster analysis. This algorithm belongs to the category of unsupervised machine algorithm and  has its probability foundations. This technique allows us to compare clusters with different shape and size (see for a classical reference \cite{Fraley02}.
+
+ Model based  clustering is not limited for the lack of a statistical fit measure to determine the optimal number of clusters. Indeed, the hierarchical clustering and partional clustering tend to favor clusters with the same size, and spherical shape. In the current application, we use a criteria for the selection of clusters, the Bayesian Information Criteria (henceforth, BIC) that penalizes complexity and rewards for parsimony when comparing different models that differ in the extracted number of clusters. In particular, the larger the value of the BIC, the stronger the evidence in favour of the corresponding model. In other words, we should pick up the model that maximizes the BIC.
+
+$$2 \log(p(x | M)) + constant \approx 2 l_M (x, \hat{\theta}) - m_m log(n) \equiv BIC$$
+
+
+The current paper employs model based clustering using the mclust package developed by\cite{Fraley98}, \cite{Scrucca16} and designed for R language. This R function, mclust, estimates a total 10 models, and evaluate the performance of each model against others by using
+the Bayesian Information Criteria (BIC). Our focus is to describe the knowledge economy according to 4 dimensions: economic and institutional regime, education, ICT and  innovation. Here, the unit of observation is the pair country, $i$, and year $t$. In this context, countries may stay in the same cluster over the entire period, or to move up or down to the clusters. In our case, as we work with k = 13 (features), and n = 865 country-year observations, identification in our application is not a problem.
+
+It has to be noted that the Gaussian mixture models identifies spherical or ellipsoid shaped clusters, but it fails to identify rectangular or line shaped clusters. By looking at the . These models are fitted via expectation maximization algorithm (henceforth, EM) for maximum likelihood estimation that is a general approach in which the data can be viewed as consisting of n multivariate observations. Generic features (shape, volumen, orientation) of the clusters are determined by the covariance matrix $\Sigma$.
+
+In determining the optimal number of clusters, we use the Elbow criteria w the optimal number of clusters selected based on the adjusted BIC and the Elbow criterions, both at seven clusters, or seven distinctive energy profiles. This means that six clusters best explain the structure of the data, after penalizing for the
+number of clusters. 
+
+
+\bibliography{articles}
+\bibliographystyle{apalike}
+
+\end{document}
